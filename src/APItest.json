@@ -1,0 +1,71 @@
+{
+  "name": "GGReviews API - Full CRUD",
+  "requests": [
+    {
+      "name": "Crear Juego",
+      "method": "POST",
+      "url": "http://localhost:5000/api/juegos",
+      "headers": [{ "key": "Content-Type", "value": "application/json" }],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"nombre\": \"Elden Ring\",\n  \"plataforma\": \"consola\",\n  \"categoria\": \"RPG\",\n  \"imagen\": \"https://images.igdb.com/igdb/image/upload/t_cover_big/co4jni.jpg\"\n}"
+      },
+      "tests": "pm.response.to.have.status(201);\nvar json = pm.response.json();\npm.environment.set('juego_id', json._id);\nconsole.log('Juego creado con ID:', json._id);"
+    },
+    {
+      "name": "Obtener Todos los Juegos",
+      "method": "GET",
+      "url": "http://localhost:5000/api/juegos"
+    },
+    {
+      "name": "Enviar Reseña (usa ID del juego)",
+      "method": "POST",
+      "url": "http://localhost:5000/api/resenas",
+      "headers": [{ "key": "Content-Type", "value": "application/json" }],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"juegoId\": \"{{juego_id}}\",\n  \"nombreJuego\": \"Elden Ring\",\n  \"comentario\": \"Obra maestra absoluta, el mejor soulslike\",\n  \"puntuacion\": 10\n}"
+      }
+    },
+    {
+      "name": "Obtener Todas las Reseñas",
+      "method": "GET",
+      "url": "http://localhost:5000/api/resenas"
+    },
+    {
+      "name": "Crear Minecraft",
+      "method": "POST",
+      "url": "http://localhost:5000/api/juegos",
+      "headers": [{ "key": "Content-Type", "value": "application/json" }],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"nombre\": \"Minecraft\",\n  \"plataforma\": \"pc\",\n  \"categoria\": \"Sandbox\"\n}"
+      }
+    },
+    {
+      "name": "Crear God of War Ragnarök",
+      "method": "POST",
+      "url": "http://localhost:5000/api/juegos",
+      "headers": [{ "key": "Content-Type", "value": "application/json" }],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"nombre\": \"God of War Ragnarök\",\n  \"plataforma\": \"consola\",\n  \"categoria\": \"Acción\"\n}"
+      }
+    },
+    {
+      "name": "Ver Juego por ID (prueba)",
+      "method": "GET",
+      "url": "http://localhost:5000/api/juegos/{{juego_id}}"
+    }
+  ],
+  "environments": [
+    {
+      "name": "Local",
+      "variables": [
+        { "key": "base_url", "value": "http://localhost:5000", "enabled": true },
+        { "key": "juego_id", "value": "", "enabled": true }
+      ]
+    }
+  ],
+  "selectedEnv": "Local"
+}
